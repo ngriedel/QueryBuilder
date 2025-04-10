@@ -1,6 +1,17 @@
 {
-  "name": "query-builder",
-  "version": "0.0.1",
+ "name": "@hamahmoud/querybuilder",
+  "version": "1.0.0",
+  "description": "Dynamic query builder for Angular 19+ with PrimeNG and Tailwind CSS support",
+  "keywords": ["angular", "query", "builder", "filter", "primeng", "tailwind"],
+  "author": "Your Name",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hmahmoud/QueryBuilder"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "@angular/common": "^19.2.0",
     "@angular/core": "^19.2.0"

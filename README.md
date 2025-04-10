@@ -21,8 +21,14 @@ The query builder provides an intuitive interface for creating complex queries t
 
 ## Installation
 
+### Using npm
 ```bash
-npm install @yourusername/angular-query-builder
+npm install @hamahmoud/querybuilder
+```
+
+### Using yarn
+```bash
+yarn add @hamahmoud/querybuilder
 ```
 
 ## Basic Usage
@@ -32,7 +38,7 @@ Import the query builder component in your standalone component:
 ```typescript
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { QueryBuilderComponent } from '@yourusername/angular-query-builder';
+import { QueryBuilderComponent } from '@hamahmoud/querybuilder';
 
 @Component({
   selector: 'app-example',
@@ -61,6 +67,42 @@ export class ExampleComponent {
     }
   };
 }
+```
+
+## Required Directives
+
+Make sure to import all the directives needed for your templates:
+
+```typescript
+import { 
+  QueryBuilderComponent,
+  QueryInputDirective,
+  QueryFieldDirective,
+  QueryOperatorDirective,
+  QueryButtonGroupDirective,
+  QuerySwitchGroupDirective,
+  QueryRemoveButtonDirective,
+  QueryEntityDirective,
+  QueryArrowIconDirective,
+  QueryEmptyWarningDirective
+} from '@hamahmoud/querybuilder';
+
+@Component({
+  // ...
+  imports: [
+    // Other imports
+    QueryBuilderComponent,
+    QueryInputDirective,
+    QueryFieldDirective,
+    QueryOperatorDirective,
+    QueryButtonGroupDirective,
+    QuerySwitchGroupDirective,
+    QueryRemoveButtonDirective,
+    QueryEntityDirective,
+    QueryArrowIconDirective,
+    QueryEmptyWarningDirective
+  ]
+})
 ```
 
 ## Demo Example
@@ -146,17 +188,89 @@ Use structural directives to customize each part of the query builder:
 </query-builder>
 ```
 
+## PrimeNG Integration
+
+To use PrimeNG components with the query builder, install and import the required PrimeNG modules:
+
+```bash
+# Install PrimeNG
+npm install primeng
+# or using yarn
+yarn add primeng
+```
+
+Then import the necessary modules:
+
+```typescript
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+// other PrimeNG modules as needed
+
+@Component({
+  // ...
+  imports: [
+    // Other imports
+    ButtonModule,
+    DropdownModule,
+    CheckboxModule,
+    RadioButtonModule,
+    // other PrimeNG modules
+  ]
+})
+```
+
+## Tailwind CSS Integration
+
+To use Tailwind CSS with the query builder, install and configure Tailwind CSS:
+
+```bash
+# Install Tailwind CSS
+npm install -D tailwindcss postcss autoprefixer
+# or using yarn
+yarn add -D tailwindcss postcss autoprefixer
+
+# Generate Tailwind configuration
+npx tailwindcss init
+```
+
+Configure your `tailwind.config.js` file:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{html,ts}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+Then add Tailwind directives to your main CSS file:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
 ## Development
 
 To set up the development environment:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/angular-query-builder.git
+git clone https://github.com/hamahmoud/angular-query-builder.git
 cd angular-query-builder
 
 # Install dependencies
 npm install
+# or using yarn
+yarn install
 
 # Start development server
 ng serve
@@ -170,6 +284,23 @@ ng build query-builder
 
 # Build the demo application
 ng build query-builder-demo
+```
+
+## Publishing
+
+To publish updates to the package:
+
+```bash
+# Build the library with production config
+ng build query-builder --configuration production
+
+# Navigate to the dist folder
+cd dist/query-builder
+
+# Publish to npm
+npm publish
+# or using yarn
+yarn publish
 ```
 
 ## Special Thanks
