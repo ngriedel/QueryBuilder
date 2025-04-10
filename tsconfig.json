@@ -1,32 +1,34 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-
-    "outDir": "../../out-tsc/lib",
-    "declaration": true,
-    "inlineSources": true,
-    "types": [],
-    "target": "es5",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "removeComments": false,
-    "noImplicitAny": false,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "lib": [
-      "es5",
-      "es6",
-      "dom"
-    ],
-
-
-
-    "baseUrl": "./",
-    "downlevelIteration": true,
-    "importHelpers": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ]
-  }
+    "compileOnSave": false,
+    "compilerOptions": {
+        "outDir": "./dist/out-tsc",
+        "strict": false,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "strictPropertyInitialization": false,
+        "strictNullChecks": false,
+        "noImplicitAny": false,
+        "strictFunctionTypes": false,
+        "noImplicitReturns": false,
+        "noFallthroughCasesInSwitch": true,
+        "skipLibCheck": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "bundler",
+        "paths": {
+            "query-builder": ["./dist/query-builder"]
+        },
+        "importHelpers": true,
+        "target": "ES2022",
+        "module": "ES2022"
+    },
+    "angularCompilerOptions": {
+        "enableI18nLegacyMessageIdFormat": false,
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true
+    }
 }

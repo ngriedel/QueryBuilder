@@ -3,45 +3,136 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular2-query-builder": {
+    "query-builder": {
       "projectType": "library",
-      "root": "projects/angular2-query-builder",
-      "sourceRoot": "projects/angular2-query-builder/src",
+      "root": "projects/query-builder",
+      "sourceRoot": "projects/query-builder/src",
+      "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/angular2-query-builder/tsconfig.lib.json",
-            "project": "projects/angular2-query-builder/ng-package.json"
+            "project": "projects/query-builder/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/angular2-query-builder/tsconfig.lib.prod.json"
+              "tsConfig": "projects/query-builder/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/query-builder/tsconfig.lib.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/angular2-query-builder/src/test.ts",
-            "tsConfig": "projects/angular2-query-builder/tsconfig.spec.json",
-            "karmaConfig": "projects/angular2-query-builder/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/angular2-query-builder/tsconfig.lib.json",
-              "projects/angular2-query-builder/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "tsConfig": "projects/query-builder/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
             ]
+          }
+        }
+      }
+    },
+    "query-builder-demo": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/query-builder-demo",
+      "sourceRoot": "projects/query-builder-demo/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/query-builder-demo",
+            "index": "projects/query-builder-demo/src/index.html",
+            "browser": "projects/query-builder-demo/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/query-builder-demo/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/query-builder-demo/public"
+              }
+            ],
+            "styles": ["projects/query-builder-demo/src/tailwind.css",
+              "projects/query-builder-demo/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "query-builder-demo:build:production"
+            },
+            "development": {
+              "buildTarget": "query-builder-demo:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/query-builder-demo/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/query-builder-demo/public"
+              }
+            ],
+            "styles": [
+              "projects/query-builder-demo/src/styles.scss"
+            ],
+            "scripts": []
           }
         }
       }
     }
   },
-  "defaultProject": "angular2-query-builder"
+  "cli": {
+    "analytics": "1ad50e0c-a469-4c46-8a49-daaca209400f"
+  }
 }
