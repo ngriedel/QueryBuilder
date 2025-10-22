@@ -27,7 +27,7 @@ export interface Field {
   type: string;
   nullable?: boolean;
   options?: Option[];
-  operators?: string[];
+  operators?: (string | OperatorOption)[];
   defaultValue?: any;
   defaultOperator?: any;
   entity?: string;
@@ -88,7 +88,7 @@ export interface QueryBuilderConfig {
   fields: FieldMap;
   entities?: EntityMap;
   allowEmptyRulesets?: boolean;
-  getOperators?: (fieldName: string, field: Field) => string[];
+  getOperators?: (fieldName: string, field: Field) => (string | OperatorOption)[];
   getInputType?: (field: string, operator: string) => string;
   getOptions?: (field: string) => Option[];
   addRuleSet?: (parent: RuleSet) => void;

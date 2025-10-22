@@ -378,7 +378,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   getOperatorHint(operator: string | OperatorOption): string | undefined {
-    return typeof operator === 'string' ? undefined : operator.hint;
+    return typeof operator === 'string' ? operator : operator.hint;
   }
 
   getOperatorHintSelect(rule: RuleSet): string | undefined {
