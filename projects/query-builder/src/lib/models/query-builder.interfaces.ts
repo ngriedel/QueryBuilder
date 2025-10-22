@@ -1,3 +1,5 @@
+import { OperatorOption } from './operator-option.interface';
+
 export interface RuleSet {
   condition?: string;
   rules?: Array<RuleSet>;
@@ -132,7 +134,7 @@ export interface FieldContext {
 export interface OperatorContext {
   onChange: () => void;
   getDisabledState: () => boolean;
-  operators: string[];
+  operators: (string | OperatorOption)[];
   $implicit: RuleSet;
 }
 
