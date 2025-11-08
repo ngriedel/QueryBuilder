@@ -623,7 +623,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   coerceValueForOperator(operator: string, value: any, rule: RuleSet): any {
     const inputType: string = this.getInputType(rule.field, operator);
     if (inputType === 'multiselect' && !Array.isArray(value)) {
-      return [value];
+      return (value !== null && value !== undefined) ? [value] : [];
     }
     return value;
   }
