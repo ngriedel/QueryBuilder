@@ -3,18 +3,56 @@
     <i [ngClass]="getClassNames('arrowIcon')"></i>
   </ng-template>
 
+  <ng-template #primengArrowIcon>
+    <i class="pi pi-chevron-right"></i>
+  </ng-template>
+
   <a *ngIf="allowCollapse" (click)="toggleCollapse()"
      [ngClass]="getClassNames('arrowIconButton', data.collapsed ? 'collapsed' : null)">
-    <ng-container *ngIf="getArrowIconTemplate() as template; else defaultArrowIcon">
+    <ng-container *ngIf="getArrowIconTemplate() as template; else checkPrimengArrowIcon">
       <ng-container *ngTemplateOutlet="template; context: getArrowIconContext()"></ng-container>
     </ng-container>
+
+    <ng-template #checkPrimengArrowIcon>
+      <ng-container *ngIf="usePrimengControls; else defaultArrowIcon">
+        <ng-container *ngTemplateOutlet="primengArrowIcon; context: getArrowIconContext()"></ng-container>
+      </ng-container>
+    </ng-template>
   </a>
 
-  <ng-container *ngIf="getButtonGroupTemplate() as template; else defaultButtonGroup">
+  <ng-container *ngIf="getButtonGroupTemplate() as template; else checkPrimengButtonGroup">
     <div [ngClass]="getClassNames('buttonGroup', 'rightAlign')">
       <ng-container *ngTemplateOutlet="template; context: getButtonGroupContext()"></ng-container>
     </div>
   </ng-container>
+
+  <ng-template #checkPrimengButtonGroup>
+    <ng-container *ngIf="usePrimengControls; else defaultButtonGroup">
+      <ng-container *ngTemplateOutlet="primengButtonGroup; context: getButtonGroupContext()"></ng-container>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #primengButtonGroup let-ruleset let-addRule="addRule" let-addRuleSet="addRuleSet" let-removeRuleSet="removeRuleSet">
+    <div class="flex space-x-2">
+      <p-button
+        icon="pi pi-plus"
+        styleClass="p-button-rounded p-button-primary p-button-sm"
+        [disabled]="disabled"
+        (onClick)="addRule()"></p-button>
+      <p-button
+        *ngIf="addRuleSet"
+        icon="pi pi-plus-circle"
+        styleClass="p-button-rounded p-button-primary p-button-sm"
+        [disabled]="disabled"
+        (onClick)="addRuleSet()"></p-button>
+      <p-button
+        *ngIf="removeRuleSet"
+        icon="pi pi-minus-circle"
+        styleClass="p-button-rounded p-button-danger p-button-sm"
+        [disabled]="disabled"
+        (onClick)="removeRuleSet()"></p-button>
+    </div>
+  </ng-template>
 
   <ng-template #defaultButtonGroup>
     <div [ngClass]="getClassNames('buttonGroup', 'rightAlign')">
@@ -33,9 +71,38 @@
     </div>
   </ng-template>
 
-  <ng-container *ngIf="getSwitchGroupTemplate() as template; else defaultSwitchGroup">
+  <ng-container *ngIf="getSwitchGroupTemplate() as template; else checkPrimengSwitchGroup">
     <ng-container *ngTemplateOutlet="template; context: getSwitchGroupContext()"></ng-container>
   </ng-container>
+
+  <ng-template #checkPrimengSwitchGroup>
+    <ng-container *ngIf="usePrimengControls; else defaultSwitchGroup">
+      <ng-container *ngTemplateOutlet="primengSwitchGroup; context: getSwitchGroupContext()"></ng-container>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #primengSwitchGroup let-ruleset let-onChange="onChange">
+    <div *ngIf="ruleset" class="flex items-center space-x-4 py-2">
+      <div class="flex items-center">
+        <p-radioButton
+          name="condition{{ruleset}}"
+          [value]="'and'"
+          [(ngModel)]="ruleset.condition"
+          [disabled]="disabled"
+          (onClick)="onChange('and')"></p-radioButton>
+        <label class="ml-2 font-medium">And</label>
+      </div>
+      <div class="flex items-center">
+        <p-radioButton
+          name="condition{{ruleset}}"
+          [value]="'or'"
+          [(ngModel)]="ruleset.condition"
+          [disabled]="disabled"
+          (onClick)="onChange('or')"></p-radioButton>
+        <label class="ml-2 font-medium">Or</label>
+      </div>
+    </div>
+  </ng-template>
 
   <ng-template #defaultSwitchGroup>
     <div [ngClass]="getClassNames('switchGroup', 'transition')" *ngIf="data">
@@ -61,11 +128,27 @@
         *ngIf="{ ruleset: !!rule.rules, invalid: !config.allowEmptyRulesets && rule.rules && rule.rules.length === 0 } as local">
         <li [ngClass]="getQueryItemClassName(local)">
           <ng-container *ngIf="!local.ruleset">
-            <ng-container *ngIf="getRemoveButtonTemplate() as template; else defaultRemoveButton">
+            <ng-container *ngIf="getRemoveButtonTemplate() as template; else checkPrimengRemoveButton">
               <div [ngClass]="getClassNames('buttonGroup', 'rightAlign')">
                 <ng-container *ngTemplateOutlet="template; context: getRemoveButtonContext(rule)"></ng-container>
               </div>
             </ng-container>
+
+            <ng-template #checkPrimengRemoveButton>
+              <ng-container *ngIf="usePrimengControls; else defaultRemoveButton">
+                <ng-container *ngTemplateOutlet="primengRemoveButton; context: getRemoveButtonContext(rule)"></ng-container>
+              </ng-container>
+            </ng-template>
+
+            <ng-template #primengRemoveButton let-rule let-removeRule="removeRule">
+              <div [ngClass]="getClassNames('removeButtonSize', 'rightAlign')">
+                <p-button
+                  icon="pi pi-minus"
+                  styleClass="p-button-rounded p-button-danger p-button-sm"
+                  [disabled]="disabled"
+                  (onClick)="removeRule(rule)"></p-button>
+              </div>
+            </ng-template>
 
             <ng-template #defaultRemoveButton>
               <div [ngClass]="getClassNames('removeButtonSize', 'rightAlign')">
@@ -77,10 +160,31 @@
             </ng-template>
 
             <div *ngIf="entities?.length > 0" class="q-inline-block-display">
-              <ng-container *ngIf="getEntityTemplate() as template; else defaultEntity">
+              <ng-container *ngIf="getEntityTemplate() as template; else checkPrimengEntity">
                 <ng-container *ngTemplateOutlet="template; context: getEntityContext(rule)"></ng-container>
               </ng-container>
             </div>
+
+            <ng-template #checkPrimengEntity>
+              <ng-container *ngIf="usePrimengFields; else defaultEntity">
+                <ng-container *ngTemplateOutlet="primengEntity; context: getEntityContext(rule)"></ng-container>
+              </ng-container>
+            </ng-template>
+
+            <ng-template #primengEntity let-rule let-entities="entities" let-onChange="onChange">
+              <div [ngClass]="getClassNames('entityControlSize')">
+                <p-select
+                  [appendTo]="'body'"
+                  [options]="entities"
+                  [(ngModel)]="rule.entity"
+                  (onChange)="onChange($event.value, rule)"
+                  [disabled]="disabled"
+                  optionLabel="name"
+                  optionValue="value"
+                  styleClass="w-full md:w-48">
+                </p-select>
+              </div>
+            </ng-template>
 
             <ng-template #defaultEntity>
               <div [ngClass]="getClassNames('entityControlSize')">
@@ -93,9 +197,30 @@
               </div>
             </ng-template>
 
-            <ng-container *ngIf="getFieldTemplate() as template; else defaultField">
+            <ng-container *ngIf="getFieldTemplate() as template; else checkPrimengField">
               <ng-container *ngTemplateOutlet="template; context: getFieldContext(rule)"></ng-container>
             </ng-container>
+
+            <ng-template #checkPrimengField>
+              <ng-container *ngIf="usePrimengFields; else defaultField">
+                <ng-container *ngTemplateOutlet="primengField; context: getFieldContext(rule)"></ng-container>
+              </ng-container>
+            </ng-template>
+
+            <ng-template #primengField let-rule let-getFields="getFields">
+              <div [ngClass]="getClassNames('fieldControlSize')">
+                <p-select
+                  [appendTo]="'body'"
+                  [options]="getFields(rule.entity)"
+                  [(ngModel)]="rule.field"
+                  (onChange)="changeField($event.value, rule)"
+                  [disabled]="disabled"
+                  optionLabel="name"
+                  optionValue="value"
+                  styleClass="w-full md:w-48">
+                </p-select>
+              </div>
+            </ng-template>
 
             <ng-template #defaultField>
               <div [ngClass]="getClassNames('fieldControlSize')">
@@ -113,7 +238,7 @@
             </ng-container>
 
             <ng-template #checkPrimeng>
-              <ng-container *ngIf="usePrimeng; else defaultOperator">
+              <ng-container *ngIf="usePrimengFields; else defaultOperator">
                 <ng-container *ngTemplateOutlet="primengOperator; context: getOperatorContext(rule)"></ng-container>
               </ng-container>
             </ng-template>
@@ -152,9 +277,83 @@
               </div>
             </ng-template>
 
-            <ng-container *ngIf="findTemplateForRule(rule) as template; else defaultInput">
+            <ng-container *ngIf="findTemplateForRule(rule) as template; else checkPrimengInput">
               <ng-container *ngTemplateOutlet="template; context: getInputContext(rule)"></ng-container>
             </ng-container>
+
+            <ng-template #checkPrimengInput>
+              <ng-container *ngIf="usePrimengInputs; else defaultInput">
+                <ng-container *ngTemplateOutlet="primengInput; context: getInputContext(rule)"></ng-container>
+              </ng-container>
+            </ng-template>
+
+            <ng-template #primengInput let-rule let-field="field" let-options="options">
+              <div [ngClass]="getClassNames('inputControlSize')" [ngSwitch]="getInputType(rule.field, rule.operator)">
+                <!-- String Input -->
+                <input *ngSwitchCase="'string'"
+                  pInputText
+                  [(ngModel)]="rule.value"
+                  (input)="changeInput()"
+                  [disabled]="disabled"
+                  class="w-full md:w-64" />
+
+                <!-- Number Input -->
+                <p-inputNumber *ngSwitchCase="'number'"
+                  [(ngModel)]="rule.value"
+                  (onInput)="changeInput()"
+                  [disabled]="disabled"
+                  styleClass="w-32"></p-inputNumber>
+
+                <!-- Date Input -->
+                <p-datePicker *ngSwitchCase="'date'"
+                  [(ngModel)]="rule.value"
+                  (onSelect)="changeInput()"
+                  [disabled]="disabled"
+                  styleClass="w-full md:w-auto"></p-datePicker>
+
+                <!-- Time Input (fallback to regular input) -->
+                <input *ngSwitchCase="'time'"
+                  pInputText
+                  [(ngModel)]="rule.value"
+                  (input)="changeInput()"
+                  [disabled]="disabled"
+                  type="time"
+                  class="w-full md:w-auto" />
+
+                <!-- Category (Dropdown) -->
+                <p-select *ngSwitchCase="'category'"
+                  [appendTo]="'body'"
+                  [options]="getOptions(rule.field)"
+                  [(ngModel)]="rule.value"
+                  (onChange)="changeInput()"
+                  [disabled]="disabled"
+                  optionLabel="name"
+                  optionValue="value"
+                  styleClass="w-full md:w-48"></p-select>
+
+                <!-- Multiselect -->
+                <p-multiSelect *ngSwitchCase="'multiselect'"
+                  [appendTo]="'body'"
+                  [options]="getOptions(rule.field)"
+                  [(ngModel)]="rule.value"
+                  (onChange)="changeInput()"
+                  [disabled]="disabled"
+                  optionLabel="name"
+                  optionValue="value"
+                  styleClass="w-full md:w-64"></p-multiSelect>
+
+                <!-- Boolean (Dropdown) -->
+                <p-select *ngSwitchCase="'boolean'"
+                  [appendTo]="'body'"
+                  [options]="[{label: 'True', value: true}, {label: 'False', value: false}]"
+                  [ngModel]="rule.value ?? true"
+                  (ngModelChange)="rule.value = $event; changeInput()"
+                  [disabled]="disabled"
+                  optionLabel="label"
+                  optionValue="value"
+                  styleClass="w-32"></p-select>
+              </div>
+            </ng-template>
 
             <ng-template #defaultInput>
               <div [ngClass]="getClassNames('inputControlSize')" [ngSwitch]="getInputType(rule.field, rule.operator)">
@@ -208,7 +407,9 @@
             [allowCollapse]="allowCollapse"
             [emptyMessage]="emptyMessage"
             [operatorMap]="operatorMap"
-            [usePrimeng]="usePrimeng"
+            [usePrimengFields]="usePrimengFields"
+            [usePrimengControls]="usePrimengControls"
+            [usePrimengInputs]="usePrimengInputs"
           >
           </query-builder>
 

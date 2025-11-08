@@ -4,20 +4,13 @@
   <div class="mb-8 bg-white rounded-lg shadow-md p-6">
     <h2 class="text-2xl font-bold   mb-4 border-b pb-2">Vanilla Query Builder</h2>
 
-    <query-builder
-      [usePrimeng]="true"
-      [formControl]="queryCtrl"
-      [config]="currentConfig"
-      [allowRuleset]="allowRuleset"
-      [allowCollapse]="allowCollapse"
-      [persistValueOnFieldChange]="persistValueOnFieldChange"
-      class="mb-6">
+    <query-builder [usePrimengFields]="true" [usePrimengControls]="false" [usePrimengInputs]="true"
+      [formControl]="queryCtrl" [config]="currentConfig" [allowRuleset]="allowRuleset" [allowCollapse]="allowCollapse"
+      [persistValueOnFieldChange]="persistValueOnFieldChange" class="mb-6">
       <ng-container *queryInput="let rule; type: 'textarea'; let getDisabledState = getDisabledState">
         <textarea
           class="w-full border border-gray-400 rounded-md p-2 resize-y focus:ring-blue-600 focus:border-blue-600 transition bg-white text-gray-900"
-          [(ngModel)]="rule.value"
-          [disabled]="getDisabledState()"
-          placeholder="Custom Textarea"></textarea>
+          [(ngModel)]="rule.value" [disabled]="getDisabledState()" placeholder="Custom Textarea"></textarea>
       </ng-container>
     </query-builder>
 
@@ -32,7 +25,8 @@
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-700 rounded focus:ring-blue-600" (change)="switchModes($event)">
+            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-700 rounded focus:ring-blue-600"
+              (change)="switchModes($event)">
             <span class="ml-2 text-gray-900">Entity Mode</span>
           </label>
         </div>
@@ -47,7 +41,8 @@
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-700 rounded focus:ring-blue-600" (change)="changeDisabled($event)">
+            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-700 rounded focus:ring-blue-600"
+              (change)="changeDisabled($event)">
             <span class="ml-2 text-gray-900">Disabled</span>
           </label>
         </div>
@@ -56,19 +51,22 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-700 rounded focus:ring-blue-600" [(ngModel)]="allowRuleset">
+            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-700 rounded focus:ring-blue-600"
+              [(ngModel)]="allowRuleset">
             <span class="ml-2 text-gray-900">Allow Ruleset</span>
           </label>
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-700 rounded focus:ring-blue-600" [(ngModel)]="allowCollapse">
+            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-700 rounded focus:ring-blue-600"
+              [(ngModel)]="allowCollapse">
             <span class="ml-2 text-gray-900">Allow Collapse</span>
           </label>
         </div>
         <div class="flex items-center">
           <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-700 rounded focus:ring-blue-600" [(ngModel)]="persistValueOnFieldChange">
+            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-700 rounded focus:ring-blue-600"
+              [(ngModel)]="persistValueOnFieldChange">
             <span class="ml-2 text-gray-900">Persist Values on Field Change</span>
           </label>
         </div>
@@ -89,31 +87,19 @@
     <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Custom PrimeNG Query Builder</h2>
 
     <p-card styleClass="shadow-none border-0">
-      <query-builder
-        [(ngModel)]="query"
-        [config]="currentConfig"
-        [allowRuleset]="allowRuleset"
-        [allowCollapse]="allowCollapse"
-        [persistValueOnFieldChange]="persistValueOnFieldChange">
+      <query-builder [(ngModel)]="query" [config]="currentConfig" [allowRuleset]="allowRuleset"
+        [allowCollapse]="allowCollapse" [persistValueOnFieldChange]="persistValueOnFieldChange">
 
         <!-- Button Group Template -->
         <ng-container
           *queryButtonGroup="let ruleset; let addRule = addRule; let addRuleSet = addRuleSet; let removeRuleSet = removeRuleSet">
           <div class="flex space-x-2">
-            <p-button
-              icon="pi pi-plus"
-              styleClass="p-button-rounded p-button-primary p-button-sm"
+            <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-primary p-button-sm"
               (onClick)="addRule()"></p-button>
-            <p-button
-              *ngIf="addRuleSet"
-              icon="pi pi-plus-circle"
-              styleClass="p-button-rounded p-button-primary p-button-sm"
-              (onClick)="addRuleSet()"></p-button>
-            <p-button
-              *ngIf="removeRuleSet"
-              icon="pi pi-minus-circle"
-              styleClass="p-button-rounded p-button-danger p-button-sm"
-              (onClick)="removeRuleSet()"></p-button>
+            <p-button *ngIf="addRuleSet" icon="pi pi-plus-circle"
+              styleClass="p-button-rounded p-button-primary p-button-sm" (onClick)="addRuleSet()"></p-button>
+            <p-button *ngIf="removeRuleSet" icon="pi pi-minus-circle"
+              styleClass="p-button-rounded p-button-danger p-button-sm" (onClick)="removeRuleSet()"></p-button>
           </div>
         </ng-container>
 
@@ -124,9 +110,7 @@
 
         <!-- Remove Button Template -->
         <ng-container *queryRemoveButton="let rule; let removeRule = removeRule">
-          <p-button
-            icon="pi pi-minus"
-            styleClass="p-button-rounded p-button-danger p-button-sm"
+          <p-button icon="pi pi-minus" styleClass="p-button-rounded p-button-danger p-button-sm"
             (onClick)="removeRule(rule)"></p-button>
         </ng-container>
 
@@ -134,18 +118,12 @@
         <ng-container *querySwitchGroup="let ruleset; let onChange = onChange">
           <div *ngIf="ruleset" class="flex items-center space-x-4 py-2">
             <div class="flex items-center">
-              <p-radioButton
-                name="condition"
-                [value]="'and'"
-                [(ngModel)]="ruleset.condition"
+              <p-radioButton name="condition" [value]="'and'" [(ngModel)]="ruleset.condition"
                 (onClick)="onChange('and')"></p-radioButton>
               <label class="ml-2 text-gray-900 font-medium">And</label>
             </div>
             <div class="flex items-center">
-              <p-radioButton
-                name="condition"
-                [value]="'or'"
-                [(ngModel)]="ruleset.condition"
+              <p-radioButton name="condition" [value]="'or'" [(ngModel)]="ruleset.condition"
                 (onClick)="onChange('or')"></p-radioButton>
               <label class="ml-2 text-gray-900 font-medium">Or</label>
             </div>
@@ -154,93 +132,55 @@
 
         <!-- Entity Template -->
         <ng-container *queryEntity="let rule; let entities = entities; let onChange = onChange">
-          <p-dropdown
-            [options]="entities"
-            [(ngModel)]="rule.entity"
-            optionLabel="name"
-            optionValue="value"
-            styleClass="w-full md:w-48"
-            (onChange)="onChange($event.value, rule)"></p-dropdown>
+          <p-dropdown [options]="entities" [(ngModel)]="rule.entity" optionLabel="name" optionValue="value"
+            styleClass="w-full md:w-48" (onChange)="onChange($event.value, rule)"></p-dropdown>
         </ng-container>
 
         <!-- Field Template -->
         <ng-container *queryField="let rule; let fields = fields; let onChange = onChange; let getFields = getFields">
-          <p-dropdown
-            [options]="getFields(rule.entity)"
-            [(ngModel)]="rule.field"
-            optionLabel="name"
-            optionValue="value"
-            styleClass="w-full md:w-48"
-            (onChange)="onChange($event.value, rule)"></p-dropdown>
+          <p-dropdown [options]="getFields(rule.entity)" [(ngModel)]="rule.field" optionLabel="name" optionValue="value"
+            styleClass="w-full md:w-48" (onChange)="onChange($event.value, rule)"></p-dropdown>
         </ng-container>
 
         <!-- Operator Template -->
         <ng-container *queryOperator="let rule; let operators = operators; let onChange = onChange">
-          <p-dropdown
-            [options]="operators"
-            [(ngModel)]="rule.operator"
-            styleClass="w-28"
+          <p-dropdown [options]="operators" [(ngModel)]="rule.operator" styleClass="w-28"
             (onChange)="onChange(rule)"></p-dropdown>
         </ng-container>
 
         <!-- Input Templates for Different Types -->
         <ng-container *queryInput="let rule; type: 'boolean'; let onChange = onChange">
           <div class="flex items-center">
-            <p-checkbox
-              [(ngModel)]="rule.value"
-              [binary]="true"
-              (onChange)="onChange()"></p-checkbox>
+            <p-checkbox [(ngModel)]="rule.value" [binary]="true" (onChange)="onChange()"></p-checkbox>
           </div>
         </ng-container>
 
         <ng-container
           *queryInput="let rule; let field = field; let options = options; type: 'category'; let onChange = onChange">
-          <p-dropdown
-            [options]="options"
-            [(ngModel)]="rule.value"
-            optionLabel="name"
-            optionValue="value"
-            styleClass="w-full md:w-48"
-            (onChange)="onChange()"></p-dropdown>
+          <p-dropdown [options]="options" [(ngModel)]="rule.value" optionLabel="name" optionValue="value"
+            styleClass="w-full md:w-48" (onChange)="onChange()"></p-dropdown>
         </ng-container>
 
         <ng-container *queryInput="let rule; type: 'date'; let onChange = onChange">
-          <p-date-picker
-            [(ngModel)]="rule.value"
-            (onSelect)="onChange()"
-            styleClass="w-full md:w-auto"></p-date-picker>
+          <p-date-picker [(ngModel)]="rule.value" (onSelect)="onChange()" styleClass="w-full md:w-auto"></p-date-picker>
         </ng-container>
 
         <ng-container *queryInput="let rule; let options = options; type: 'multiselect'; let onChange = onChange">
-          <p-multiSelect
-            [options]="options"
-            [(ngModel)]="rule.value"
-            optionLabel="name"
-            optionValue="value"
-            styleClass="w-full md:w-80"
-            (onChange)="onChange()"></p-multiSelect>
+          <p-multiSelect [options]="options" [(ngModel)]="rule.value" optionLabel="name" optionValue="value"
+            styleClass="w-full md:w-80" (onChange)="onChange()"></p-multiSelect>
         </ng-container>
 
         <ng-container *queryInput="let rule; let field = field; type: 'number'; let onChange = onChange">
-          <p-inputNumber
-            [(ngModel)]="rule.value"
-            styleClass="w-24"
-            (onInput)="onChange()"></p-inputNumber>
+          <p-inputNumber [(ngModel)]="rule.value" styleClass="w-24" (onInput)="onChange()"></p-inputNumber>
         </ng-container>
 
         <ng-container *queryInput="let rule; let field = field; type: 'string'; let onChange = onChange">
-          <input
-            pInputText
-            [(ngModel)]="rule.value"
-            (input)="onChange()"
+          <input pInputText [(ngModel)]="rule.value" (input)="onChange()"
             class="w-full md:w-64 border border-gray-400 rounded-md px-3 py-2 bg-white text-gray-900 focus:ring-blue-600 focus:border-blue-600 transition" />
         </ng-container>
 
         <ng-container *queryInput="let rule; let field = field; type: 'textarea'; let onChange = onChange">
-          <textarea
-            pTextarea
-            [(ngModel)]="rule.value"
-            (input)="onChange()"
+          <textarea pTextarea [(ngModel)]="rule.value" (input)="onChange()"
             class="w-full md:w-64 border border-gray-400 rounded-md p-2 bg-white text-gray-900 resize-y focus:ring-blue-600 focus:border-blue-600 transition"></textarea>
         </ng-container>
       </query-builder>

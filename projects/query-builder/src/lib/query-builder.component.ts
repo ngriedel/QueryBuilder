@@ -54,6 +54,12 @@ import {
 import { OperatorOption } from './models/operator-option.interface';
 import { SelectModule } from 'primeng/select';
 import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DatePickerModule } from 'primeng/datepicker';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 export const CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -72,7 +78,7 @@ export const VALIDATOR: any = {
   templateUrl: './query-builder.component.html',
   styleUrls: ['./query-builder.component.scss'],
   providers: [CONTROL_VALUE_ACCESSOR, VALIDATOR],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SelectModule, TooltipModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SelectModule, TooltipModule, ButtonModule, RadioButtonModule, InputTextModule, InputNumberModule, DatePickerModule, MultiSelectModule],
   standalone: true
 })
 export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
@@ -162,7 +168,9 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
 
   @Input() allowRuleset: boolean = true;
   @Input() allowCollapse: boolean = false;
-  @Input() usePrimeng: boolean = false;
+  @Input() usePrimengFields: boolean = false;
+  @Input() usePrimengControls: boolean = false;
+  @Input() usePrimengInputs: boolean = false;
   @Input() emptyMessage: string = 'A ruleset cannot be empty. Please add a rule or remove it all together.';
   @Input() classNames: QueryBuilderClassNames;
   @Input() operatorMap: { [key: string]: (string | OperatorOption)[] };
@@ -235,13 +243,13 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     this.changeDetectorRef.detectChanges();
   }
 
-//   registerOnChange(fn: any): void {
-//     this.onChangeCallback = () => fn(this.data);
-//   }
-//   setDisabledState(isDisabled: boolean): void {
-//     this.disabled = isDisabled;
-//     this.changeDetectorRef.detectChanges();
-//   }
+  //   registerOnChange(fn: any): void {
+  //     this.onChangeCallback = () => fn(this.data);
+  //   }
+  //   setDisabledState(isDisabled: boolean): void {
+  //     this.disabled = isDisabled;
+  //     this.changeDetectorRef.detectChanges();
+  //   }
   // ----------OnChanges Implementation----------
 
   ngOnChanges(changes: SimpleChanges) {
@@ -264,7 +272,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
       }
       this.operatorsCache = {};
     } else {
-      throw new Error(`Expected 'config' must be a valid object, got ${ type } instead.`);
+      throw new Error(`Expected 'config' must be a valid object, got ${type} instead.`);
     }
   }
 
@@ -325,7 +333,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
         return queryInput.template;
       } else {
         if (this.defaultTemplateTypes.indexOf(type) === -1) {
-          console.warn(`Could not find template for field with type: ${ type }`);
+          console.warn(`Could not find template for field with type: ${type}`);
         }
         return null;
       }
@@ -357,7 +365,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
       operators = (this.operatorMap && this.operatorMap[type]) || this.defaultOperatorMap[type] || this.defaultEmptyList;
       if (operators.length === 0) {
         console.warn(
-          `No operators found for field '${ field }' with type ${ fieldObject.type }. ` +
+          `No operators found for field '${field}' with type ${fieldObject.type}. ` +
           `Please define an 'operators' property on the field or use the 'operatorMap' binding to fix this.`
         );
       }
@@ -368,7 +376,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
         ]);
       }
     } else {
-      console.warn(`No 'type' property found on field: '${ field }'`);
+      console.warn(`No 'type' property found on field: '${field}'`);
     }
 
     // Cache reference to array object, so it won't be computed next time and trigger a rerender.
@@ -422,7 +430,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     }
 
     if (!this.config.fields[field]) {
-      throw new Error(`No configuration for field '${ field }' could be found! Please add it to config.fields.`);
+      throw new Error(`No configuration for field '${field}' could be found! Please add it to config.fields.`);
     }
 
     const type = this.config.fields[field].type;
@@ -464,7 +472,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
         return entityFields[0];
       } else {
         console.warn(
-          `No fields found for entity '${ entity.name }'. ` +
+          `No fields found for entity '${entity.name}'. ` +
           `A 'defaultOperator' is also not specified on the field config. Operator value will default to null.`
         );
         return null;
@@ -483,7 +491,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
         return typeof firstOperator === 'string' ? firstOperator : firstOperator.op;
       } else {
         console.warn(
-          `No operators found for field '${ field.value }'. ` +
+          `No operators found for field '${field.value}'. ` +
           `A 'defaultOperator' is also not specified on the field config. Operator value will default to null.`
         );
         return null;
