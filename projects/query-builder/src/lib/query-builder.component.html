@@ -108,15 +108,44 @@
               </div>
             </ng-template>
 
-            <ng-container *ngIf="getOperatorTemplate() as template; else defaultOperator">
+            <ng-container *ngIf="getOperatorTemplate() as template; else checkPrimeng">
               <ng-container *ngTemplateOutlet="template; context: getOperatorContext(rule)"></ng-container>
             </ng-container>
 
+            <ng-template #checkPrimeng>
+              <ng-container *ngIf="usePrimeng; else defaultOperator">
+                <ng-container *ngTemplateOutlet="primengOperator; context: getOperatorContext(rule)"></ng-container>
+              </ng-container>
+            </ng-template>
+
+            <ng-template #primengOperator let-rule>
+              <div [ngClass]="getClassNames('operatorControlSize')">
+                <p-select
+                  [appendTo]="'body'"
+                  [options]="getOperatorsForPrimeng(rule.field)"
+                  [(ngModel)]="rule.operator"
+                  (onChange)="changeOperator(rule)"
+                  [disabled]="disabled"
+                  optionLabel="label"
+                  optionValue="value"
+                  styleClass="w-28">
+                  <ng-template pTemplate="item" let-option>
+                    <span [pTooltip]="option.hint">{{ option.label }}</span>
+                  </ng-template>
+                  <ng-template pTemplate="selectedItem" let-option>
+                    <span [pTooltip]="option.hint" [title]="option.hint">{{ option.label }}</span>
+                  </ng-template>
+                </p-select>
+              </div>
+            </ng-template>
+
             <ng-template #defaultOperator>
               <div [ngClass]="getClassNames('operatorControlSize')">
-                <select [title]="getOperatorHintSelect(rule)" [ngClass]="getClassNames('operatorControl')" [(ngModel)]="rule.operator"
+                <select [title]="getOperatorHintSelect(rule)" [ngClass]="getClassNames('operatorControl')"
+                        [(ngModel)]="rule.operator"
                         (ngModelChange)="changeOperator(rule)" [disabled]="disabled">
-                  <option [title]="getOperatorHint(operator)" *ngFor="let operator of getOperators(rule.field)" [ngValue]="getOperatorDisplay(operator)">
+                  <option [title]="getOperatorHint(operator)" *ngFor="let operator of getOperators(rule.field)"
+                          [ngValue]="getOperatorDisplay(operator)">
                     {{ getOperatorDisplay(operator) }}
                   </option>
                 </select>
@@ -179,6 +208,7 @@
             [allowCollapse]="allowCollapse"
             [emptyMessage]="emptyMessage"
             [operatorMap]="operatorMap"
+            [usePrimeng]="usePrimeng"
           >
           </query-builder>
 

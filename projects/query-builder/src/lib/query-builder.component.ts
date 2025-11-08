@@ -52,6 +52,8 @@ import {
   SwitchGroupContext
 } from './models/query-builder.interfaces';
 import { OperatorOption } from './models/operator-option.interface';
+import { SelectModule } from 'primeng/select';
+import { TooltipModule } from 'primeng/tooltip';
 
 export const CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -70,7 +72,7 @@ export const VALIDATOR: any = {
   templateUrl: './query-builder.component.html',
   styleUrls: ['./query-builder.component.scss'],
   providers: [CONTROL_VALUE_ACCESSOR, VALIDATOR],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SelectModule, TooltipModule],
   standalone: true
 })
 export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
@@ -160,6 +162,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
 
   @Input() allowRuleset: boolean = true;
   @Input() allowCollapse: boolean = false;
+  @Input() usePrimeng: boolean = false;
   @Input() emptyMessage: string = 'A ruleset cannot be empty. Please add a rule or remove it all together.';
   @Input() classNames: QueryBuilderClassNames;
   @Input() operatorMap: { [key: string]: (string | OperatorOption)[] };
@@ -390,6 +393,17 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     const foundOperator = operators.find(op => this.getOperatorDisplay(op) === rule.operator);
 
     return foundOperator ? this.getOperatorHint(foundOperator) : undefined;
+  }
+
+  getOperatorsForPrimeng(field: string): Array<{ value: string; label: string; hint?: string }> {
+    const operators = this.getOperators(field);
+    return operators.map(op => {
+      if (typeof op === 'string') {
+        return { value: op, label: op };
+      } else {
+        return { value: op.op, label: op.op, hint: op.hint };
+      }
+    });
   }
 
   getFields(entity: string): Field[] {

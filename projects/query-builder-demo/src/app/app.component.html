@@ -5,6 +5,7 @@
     <h2 class="text-2xl font-bold   mb-4 border-b pb-2">Vanilla Query Builder</h2>
 
     <query-builder
+      [usePrimeng]="true"
       [formControl]="queryCtrl"
       [config]="currentConfig"
       [allowRuleset]="allowRuleset"
@@ -96,7 +97,8 @@
         [persistValueOnFieldChange]="persistValueOnFieldChange">
 
         <!-- Button Group Template -->
-        <ng-container *queryButtonGroup="let ruleset; let addRule = addRule; let addRuleSet = addRuleSet; let removeRuleSet = removeRuleSet">
+        <ng-container
+          *queryButtonGroup="let ruleset; let addRule = addRule; let addRuleSet = addRuleSet; let removeRuleSet = removeRuleSet">
           <div class="flex space-x-2">
             <p-button
               icon="pi pi-plus"
@@ -191,7 +193,8 @@
           </div>
         </ng-container>
 
-        <ng-container *queryInput="let rule; let field = field; let options = options; type: 'category'; let onChange = onChange">
+        <ng-container
+          *queryInput="let rule; let field = field; let options = options; type: 'category'; let onChange = onChange">
           <p-dropdown
             [options]="options"
             [(ngModel)]="rule.value"
