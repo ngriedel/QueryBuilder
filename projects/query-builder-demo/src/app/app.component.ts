@@ -5,13 +5,13 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DatePickerModule } from 'primeng/datepicker';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TextareaModule } from 'primeng/textarea';
 import { QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig } from 'query-builder';
+import { SelectModule } from 'primeng/select';
 @Component({
     selector: 'app-root',
     imports: [
@@ -21,7 +21,7 @@ import { QueryBuilderClassNames, QueryBuilderComponent, QueryBuilderConfig } fro
         QueryBuilderComponent,
         ButtonModule,
         CardModule,
-        DropdownModule,
+        SelectModule,
         RadioButtonModule,
         CheckboxModule,
         DatePickerModule,
