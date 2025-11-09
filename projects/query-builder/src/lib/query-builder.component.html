@@ -310,7 +310,8 @@
                     }
                     <!-- Date Input -->
                     @case ('date') {
-                      <p-datePicker [(ngModel)]="rule.value" (onSelect)="changeInput()" [disabled]="disabled"
+                      <p-datePicker [(ngModel)]="rule.value" [appendTo]="'body'" (onSelect)="changeInput()"
+                                    [disabled]="disabled"
                                     styleClass="w-full md:w-auto"></p-datePicker>
                     }
                     <!-- Time Input (fallback to regular input) -->

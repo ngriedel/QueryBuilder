@@ -100,7 +100,7 @@ export class AppComponent {
             },
             name: { name: 'Name', type: 'string', entity: 'nonphysical' },
             notes: { name: 'Notes', type: 'textarea', operators: ['=', '!='], entity: 'nonphysical' },
-            educated: { name: 'College Degree?', type: 'boolean', entity: 'nonphysical' },
+            educated: { name: 'College Degree?', type: 'boolean', entity: 'nonphysical', defaultValue: true },
             birthday: { name: 'Birthday', type: 'date', operators: ['=', '<=', '>'], defaultValue: () => new Date(), entity: 'nonphysical' },
             school: { name: 'School', type: 'string', nullable: true, entity: 'nonphysical' },
             occupation: {
@@ -130,7 +130,7 @@ export class AppComponent {
             },
             name: { name: 'Name', type: 'string' },
             notes: { name: 'Notes', type: 'textarea', operators: ['=', '!='] },
-            educated: { name: 'College Degree?', type: 'boolean' },
+            educated: { name: 'College Degree?', type: 'boolean', defaultValue: true },
             birthday: { name: 'Birthday', type: 'date', operators: ['=', '<=', '>'], defaultValue: () => new Date() },
             school: { name: 'School', type: 'string', nullable: true },
             occupation: {
